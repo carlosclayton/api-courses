@@ -5,12 +5,12 @@ const prisma = new PrismaClient()
 async function main() {
     const user = await prisma.users.update({
             where: {
-                id: '86b2e31b-b03b-4640-9048-6313cb6107d2'
+                id: '3f6eaf4a-46e4-471a-977a-f7d8b03e3e6a'
             }, data: {
                 name: 'Carlos Clayton',
                 profile: {
-                    create: {
-                        type: 'User'
+                    connect: {
+                        id: '3840a21d-3319-4836-9c38-020f04b98b39'
                     }
                 }
             }

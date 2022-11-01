@@ -23,8 +23,8 @@ model Users {
 model Profiles {
   id     String  @id @default(uuid())
   type String
-  user   Users @relation(fields: [userId], references: [id])
-  userId String  @unique
+  user   Users @relation(fields: [user_id], references: [id])
+  user_id String  @unique
    @@map("profiles")
 }
 
@@ -32,6 +32,7 @@ model Modules {
     id  String @id @default(uuid())
     name  String @unique
     created_at  DateTime @default(now())
+    courses CoursesModules[]
     @@map("modules")
 }
 
@@ -43,6 +44,7 @@ model Courses {
     created_at  DateTime @default(now())
     teacher Teachers @relation(fields: [fk_id_teacher], references: [id])
     fk_id_teacher String @unique
+    modules CoursesModules[]
     @@map("courses")
 }
 
@@ -52,4 +54,32 @@ model Teachers{
     course Courses?
     created_at DateTime @default(now())
     @@map("teachers")
+}
+
+
+model Authors {
+    id  String @id @default(uuid())
+    name String @unique
+    books Books[]
+    created_at DateTime @default(now())
+    @@map("authors")
+}
+
+model Books {
+    id  String @id @default(uuid())
+    name String @unique
+    author_id String
+    author Authors @relation(fields: [author_id], references: [id])
+    created_at DateTime @default(now())
+    @@map("books")
+}
+
+model CoursesModules {
+    id  String @id @default(uuid())
+    courses Courses @relation(fields: [fk_id_course], references: [id])
+    fk_id_course String
+    modules Modules @relation(fields: [fk_id_module], references: [id])
+    fk_id_module String
+    created_at DateTime @default(now())
+    @@map("courses_modules")
 }
